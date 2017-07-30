@@ -2,11 +2,11 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 
-var users = require('./routes/users');
+var users = require('./users/userRoutes');
 
 var app = express();
 
-var port = 3000;
+var port = process.env.port || 3000;
 
 //Set Static Folder
 app.use(express.static(path.join(__dirname, 'client')));
