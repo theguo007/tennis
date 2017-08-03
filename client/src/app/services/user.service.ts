@@ -25,15 +25,15 @@ export class UserService {
         .catch(this.handleError);
   }
 
-  postService(data: object): Observable<any>{
+  createUser(data: object): Observable<any>{
       var headers = new Headers();
       headers.append('Content-Type', 'application/json');
-      return this.http.post(this.urlPrefix+'/user/create', JSON.stringify(data), {headers:headers})
+      return this.http.post(this.urlPrefix+'/user', JSON.stringify(data), {headers:headers})
         .map(res => res.json())
         .catch(this.handleError);
   }
 
-  putService(id: number, data: object): Observable<any>{
+  editUser(id: number, data: object): Observable<any>{
       var headers = new Headers();
       headers.append('Content-Type', 'application/json');
       return this.http.put(this.urlPrefix + '/user/' + id.toString() + '/edit', JSON.stringify(data), {headers:headers})
