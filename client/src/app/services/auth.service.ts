@@ -25,6 +25,16 @@ export class AuthService {
     this.user = user;
   }
 
+  getProfile(){
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type','application/json');
+    let ep = this.prepEndpoint('users/profile');
+    return this.http.get(ep,{headers: headers})
+      .map(res => res.json());
+  }
+
   logout() {
     this.authToken = null;
     this.user = null;
@@ -38,6 +48,10 @@ export class AuthService {
 
   loggedIn(){
     return tokenNotExpired('id_token');
+  }
+
+  prepEndpoint(x: string){
+    return this.prefix+x;
   }
 
 }

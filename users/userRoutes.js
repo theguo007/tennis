@@ -1,14 +1,15 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 // var mongoose = require('mongoose');
+const passport = require('passport');
 
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 
 var User = require('./user');
 
 // Get users
-router.get('/users', function(req, res, next){
+router.get('/users', passport.authenticate('jwt', {session:false}), function(req, res, next){  
   User.find(function(err, users){
     if(err) res.send(err);
     res.json(users);
@@ -16,16 +17,24 @@ router.get('/users', function(req, res, next){
 });
 
 // Get user
-router.get('/user/:id', function(req, res){
-  User.findById(req.params.id, function(err, user) {
-    console.log(req.params.id);
+router.get('/users/:id', passport.authenticate('jwt', {session:false}), function(req, res){
+  User.findById(req.params.id, function(err, user) {    
     if(err) res.send(err);
       res.json(user);
   });
 });
 
+router.get('/profile', passport.authenticate('jwt', {session:false}), function(req, res, next){
+  // res.json(req.headers.authorization.substring(4));
+  var decoded = jwt.decode(req.headers.authorization.substring(4))._doc;
+  delete decoded.password;
+  var x = new User(decoded);  
+  console.log(x);
+  res.json(x);
+});
+
 // Create user
-router.post('/user', function(req, res){
+router.post('/users', function(req, res){
     User.getUserByEmail(req.body.email, (err, user) => {
         if(user == null){
             var user = new User({
@@ -50,7 +59,7 @@ router.post('/user', function(req, res){
 });
 
 // Edit user information (of self)
-router.put('/user/:id', function(req, res){
+router.put('/users/:id', passport.authenticate('jwt', {session:false}), function(req, res){
     User.findById(req.params.id, function(err, user){
         if(err) res.send(err);
         user.description = req.body.description;
@@ -70,12 +79,11 @@ router.post('/authenticate', (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  User.getUserByEmail(email, (err, user) => {
+  User.getUserByEmailWithPassword(email, (err, user) => {
     if(err) throw err;
     if(!user){
       return res.json({success: false, msg: 'User not found'});
-    }
-
+    }        
     User.comparePassword(password, user.password, (err, isMatch) => {
       if(err) throw err;
       if(isMatch){

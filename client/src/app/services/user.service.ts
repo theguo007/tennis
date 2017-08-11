@@ -20,7 +20,7 @@ export class UserService {
   }
 
   getUser(id: number): Observable<User>{
-    return this.http.get(this.urlPrefix+'/user/'+ id.toString())
+    return this.http.get(this.urlPrefix+'/users/'+ id.toString())
         .map((response: Response) => <User>response.json())
         .catch(this.handleError);
   }
@@ -28,7 +28,7 @@ export class UserService {
   createUser(data: object): Observable<any>{
       var headers = new Headers();
       headers.append('Content-Type', 'application/json');
-      return this.http.post(this.urlPrefix+'/user', JSON.stringify(data), {headers:headers})
+      return this.http.post(this.urlPrefix+'/users', JSON.stringify(data), {headers:headers})
         .map(res => res.json())
         .catch(this.handleError);
   }
@@ -36,7 +36,7 @@ export class UserService {
   editUser(id: number, data: object): Observable<any>{
       var headers = new Headers();
       headers.append('Content-Type', 'application/json');
-      return this.http.put(this.urlPrefix + '/user/' + id.toString() + '/edit', JSON.stringify(data), {headers:headers})
+      return this.http.put(this.urlPrefix + '/users/' + id.toString() + '/edit', JSON.stringify(data), {headers:headers})
         .map(res => res.json())
         .catch(this.handleError);
   }
