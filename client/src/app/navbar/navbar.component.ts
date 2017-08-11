@@ -56,4 +56,12 @@ export class NavbarComponent implements OnInit {
     this.loginForm.reset();   
   }
 
+  showLoginOnNav() {        
+    return location.pathname != '/login' && location.pathname != '/user/create';
+  }
+
+  logout() {
+    this.router.navigate['#'];
+    this.authService.logout();
+  }
 }

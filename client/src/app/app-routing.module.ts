@@ -12,7 +12,7 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'users',  component: UserComponent },
+  { path: 'users',  component: UserComponent, canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent },
   { path: 'user/:id/edit', component: EditUserComponent, canActivate: [AuthGuard] },
   { path: 'user/create', component: CreateUserComponent },
