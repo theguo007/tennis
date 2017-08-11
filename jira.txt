@@ -1,0 +1,2 @@
+Move database calls from routes into user.js
+Add token to client side api calls
