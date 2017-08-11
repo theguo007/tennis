@@ -37,8 +37,7 @@ export class NavbarComponent implements OnInit {
       email: this.loginForm.get('email').value,
       password: this.loginForm.get('password').value
     }
-
-
+    console.log("logging in");
 
     this.authService.authenticateUser(user).subscribe(data => {
       if(data.success){
@@ -49,12 +48,12 @@ export class NavbarComponent implements OnInit {
       } else {
         // todo: add failed message
         console.log('login failed');
-        this.router.navigate(['login']);
+        this.router.navigate(['/login']);
       }
 
     });
 
-    this.loginForm.setValue({'password': ''})
+   //this.loginForm.setValue({'password': ''})
   }
 
 }
