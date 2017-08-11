@@ -9,8 +9,8 @@ const config = require('../config/database');
 var User = require('./user');
 
 // Get users
-router.get('/users', passport.authenticate('jwt', {session:false}), function(req, res, next){  
-  User.find(function(err, users){
+router.get('/users', passport.authenticate('jwt', {session:false}), function(req, res, next){
+  User.getAllUsers(function(err, users){
     if(err) res.send(err);
     res.json(users);
   });
@@ -18,9 +18,11 @@ router.get('/users', passport.authenticate('jwt', {session:false}), function(req
 
 // Get user
 router.get('/users/:id', passport.authenticate('jwt', {session:false}), function(req, res){
-  User.findById(req.params.id, function(err, user) {    
+  User.getUserById(req.params.id, function(err, user) {    
     if(err) res.send(err);
-      res.json(user);
+
+    user.select("-password");
+    res.json(user);
   });
 });
 
@@ -60,17 +62,20 @@ router.post('/users', function(req, res){
 
 // Edit user information (of self)
 router.put('/users/:id', passport.authenticate('jwt', {session:false}), function(req, res){
-    User.findById(req.params.id, function(err, user){
-        if(err) res.send(err);
-        user.description = req.body.description;
-        user.name = req.body.name;
-        user.email = req.body.email;
-        user.phoneNumber = req.body.phoneNumber;
-        user.save(function(err){
-            if(err) res.send(err);
-            res.json({success: true, message: "user updated"});
-        })
-    });
+  const usr = {
+    _id: req.params.id,
+    description: req.body.description,
+    name: req.body.name,
+    email: req.body.email,
+    phoneNumber: req.body.phoneNumber
+  }
+  User.updateUser(usr, (err, success) => {
+    if (err) {
+      res.json({success: false, msg: "There was a problem updating your information."});
+    } else {
+      res.json({success: true, msg: "User information successfully saved."});
+    }
+  });
 });
 
 

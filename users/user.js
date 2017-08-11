@@ -27,6 +27,10 @@ var userSchema = new Schema({
 
 var User = module.exports = mongoose.model('User', userSchema);
 
+module.exports.getAllUsers = function(callback) {
+  User.find({}, callback);
+}
+
 module.exports.getUserByEmail = function(email, callback) {
     if(email == "" || email == null){
       return callback(null, null);      
@@ -47,14 +51,35 @@ module.exports.getUserById = function(id, callback){
   User.findById(id, callback).select("+password");
 }
 
+
 module.exports.addUser = function(newUser, callback) {
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(newUser.password, salt, (err, hash) => {
-      console.log(err, hash);
       if(err) throw err;
       newUser.password = hash;
       newUser.save(callback);
     });
+  });
+}
+
+module.exports.updateUser = function(usr, callback) {
+  User.findById(usr._id, function(err, user){
+      if (err) {
+        callback(err, null);
+      } else {
+        user.description = req.body.description,
+        user.name = req.body.name,
+        user.email = req.body.email,
+        user.phoneNumber = req.body.phoneNumber
+        user.save(function(err){
+          if(err) {
+            callback(err, false);
+          } else {
+           callback(null, true);
+          }
+        });
+      }
+      
   });
 }
 
