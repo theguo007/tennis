@@ -16,6 +16,9 @@ var userSchema = new Schema({
 var User = module.exports = mongoose.model('User', userSchema);
 
 module.exports.getUserByEmail = function(email, callback) {
+    if(email == "" || email == null){
+      return callback(null, null);      
+    }
     const query = {email: email};
     User.findOne(query, callback);
 }

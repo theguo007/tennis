@@ -53,7 +53,7 @@ export class NavbarComponent implements OnInit {
 
     });
 
-   //this.loginForm.setValue({'password': ''})
+    this.loginForm.reset();   
   }
 
 }
