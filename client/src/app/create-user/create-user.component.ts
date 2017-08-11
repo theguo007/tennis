@@ -27,8 +27,6 @@ export class CreateUserComponent implements OnInit {
       this.createForm();
     }
 
-  
-
   ngOnInit() {
   }
 
@@ -108,7 +106,6 @@ export class CreateUserComponent implements OnInit {
       phoneNumber: this.registerForm.get('phoneNumber').value,
       description: this.registerForm.get('description').value,
       password: this.registerForm.get('passwords.password').value
-
     }
 
     this.userService.createUser(user).subscribe(data => {

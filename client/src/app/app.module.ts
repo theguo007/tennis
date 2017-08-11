@@ -3,7 +3,10 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { AuthGuard } from './guards/auth.guard';
+
 import { UserService } from './services/user.service';
+import { AuthService } from './services/auth.service';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -12,6 +15,8 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 
 
 
@@ -22,7 +27,9 @@ import { NavbarComponent } from './navbar/navbar.component';
     CreateUserComponent,
     EditUserComponent,
     UserDetailComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +38,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [UserService],
+  providers: [UserService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

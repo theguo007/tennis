@@ -43,12 +43,12 @@
         </li>
       </ul>
 
-      <form class="navbar-form navbar-right">
+      <form class="navbar-form navbar-right" [formGroup]="loginForm" (submit)=onLogin() >
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Username">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="text" class="form-control" placeholder="Email" formControlName="email">
+          <input type="password" class="form-control" placeholder="Password" formControlName="password">
         </div>
-        <button type="submit" class="btn btn-success">Log in</button>
+        <button type="submit" class="btn btn-success" >Log in</button>
       </form>
 
       
