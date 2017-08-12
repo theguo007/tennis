@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AuthGuard } from './guards/auth.guard';
+import { AntiAuthGuard } from './guards/antiAuth.guard';
 
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
@@ -38,7 +39,7 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [UserService, AuthService, AuthGuard],
+  providers: [UserService, AuthService, AuthGuard, AntiAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

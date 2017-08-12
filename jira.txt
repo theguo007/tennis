@@ -1,2 +1,6 @@
 Move database calls from routes into user.js -- DONE
-Add token to client side api calls
+Add token to client side api calls -- DONE
+When logged in, we need to figure out what to do with signup and login routes -- DONE
+
+Create dashboard that indicates it knows who you are. Maybe show profile information?
+
