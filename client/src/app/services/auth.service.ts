@@ -29,36 +29,6 @@ export class AuthService {
     this.user = user;
   }
 
-   getUsers(): Observable<User[]> {
-    let headers = new Headers();
-    this.loadToken();
-    headers.append('Authorization', this.authToken);
-    headers.append('Content-Type','application/json');
-    return this.http.get(this.prepEndpoint("users"), {headers: headers})
-        .map((response: Response) => <User[]>response.json())
-        .catch(this.handleError);
-  }
-
-  getProfile(){
-    let headers = new Headers();
-    this.loadToken();
-    headers.append('Authorization', this.authToken);
-    headers.append('Content-Type','application/json');
-    let ep = this.prepEndpoint('users/profile');
-    return this.http.get(ep,{headers: headers})
-      .map(res => res.json());
-  }
-
-  editUser(id: number, data: object): Observable<any>{
-      var headers = new Headers();
-      this.loadToken();
-      headers.append('Authorization', this.authToken);
-      headers.append('Content-Type','application/json');
-      return this.http.put(this.prepEndpoint('users/' + id.toString() + '/edit'), JSON.stringify(data), {headers:headers})
-        .map(res => res.json())
-        .catch(this.handleError);
-  }
-
   logout() {
     this.authToken = null;
     this.user = null;
@@ -76,6 +46,14 @@ export class AuthService {
 
   prepEndpoint(x: string){
     return this.prefix+x;
+  }
+
+  getAuthHeaders(){
+    var headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('Content-Type','application/json');
+    return headers;
   }
 
   private handleError(error: any): Promise<any> {
