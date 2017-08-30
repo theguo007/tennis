@@ -3,7 +3,6 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
-      <th>Phone Number</th>
       <th>Email</th>
     </tr>
   </thead>
@@ -11,7 +10,6 @@
     <tr *ngFor="let user of users">
       <th scope="row">{{user.name}} </th>
       <td>{{user.description}} </td>
-      <td>{{user.phoneNumber}} </td>
       <td>{{user.email}} </td>
     </tr>
   </tbody>

@@ -12,18 +12,14 @@ var userSchema = new Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
   },
 	description: String, 						// short description of skill level
-	phoneNumber: Number,							// short blurb about best way to reach user
   password: {
     type: String,
     required: true,
     select: false,
   },
 });
-
-
 
 var User = module.exports = mongoose.model('User', userSchema);
 
@@ -70,7 +66,6 @@ module.exports.updateUser = function(usr, callback) {
         user.description = req.body.description,
         user.name = req.body.name,
         user.email = req.body.email,
-        user.phoneNumber = req.body.phoneNumber
         user.save(function(err){
           if(err) {
             callback(err, false);

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import * as alertify from 'alertify.js';
 
 @Component({
   selector: 'app-create-user',
@@ -11,20 +12,14 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 })
 export class CreateUserComponent implements OnInit {
 
-  name: String;
-  email: String;
-  phoneNumber: String;
-  description: String;
-  password: String;
-
-  registerForm: FormGroup;
+  registerForm: FormGroup;  
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private userService: UserService)
     {
-      this.createForm();
+      this.createForm();      
     }
 
   ngOnInit() {
@@ -34,15 +29,12 @@ export class CreateUserComponent implements OnInit {
     this.registerForm = this.fb.group({
       name: ['', Validators.required ],
       email: ['', [Validators.email]],
-      phoneNumber: ['', [Validators.required]],
-      description: ['', [Validators.required]  ],
       passwords: this.fb.group(
         {
         password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)] ],
         password_confirm: ['', [Validators.required] ],
         }, { validator: this.passwordMatchValidator}
       ),
-
     });
 
     this.registerForm.valueChanges
@@ -75,7 +67,6 @@ export class CreateUserComponent implements OnInit {
 
   formErrors = {
     'name': '',
-    'description': '',
     'email': '',
     'passwords.password': '',
     'passwords.password_confirm': ''
@@ -84,9 +75,6 @@ export class CreateUserComponent implements OnInit {
   validationMessages = {
     'name': {
       'required': 'Name is required.'
-    },
-    'description': {
-      'required': 'Description is required.'
     },
     'email': {
       'email': 'Please enter a valid email address.'
@@ -103,13 +91,15 @@ export class CreateUserComponent implements OnInit {
     const user = {
       name: this.registerForm.get('name').value,
       email: this.registerForm.get('email').value,
-      phoneNumber: this.registerForm.get('phoneNumber').value,
-      description: this.registerForm.get('description').value,
       password: this.registerForm.get('passwords.password').value
     }
 
     this.userService.createUser(user).subscribe(data => {
-       this.router.navigate(['/']);
+      if(data.success == false){
+        alertify.error(data.message);
+      } else {
+        this.router.navigate(['/']);
+      }
     });
   }
 }

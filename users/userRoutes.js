@@ -40,22 +40,20 @@ router.post('/users', function(req, res){
     User.getUserByEmail(req.body.email, (err, user) => {
         if(user == null){
             var user = new User({
-                description: req.body.description,
                 name: req.body.name,
                 email: req.body.email,
-                phoneNumber: req.body.phoneNumber,
                 password: req.body.password
             });
             
             User.addUser(user, (err, user) => {
                 if(err) {
-                    res.json({success: false, msg:'Failed to register'});
+                    res.json({success: false, message:'Failed to register' + err});
                 } else {
-                    res.json({sucess: true, msg: "User registered"});
+                    res.json({success: true, message: "User registered"});
                 }
             })
         } else {
-            res.json({success: false, message: "username already taken"});
+            res.json({success: false, message: "Email already taken"});
         }
     });
 });
@@ -67,7 +65,6 @@ router.put('/users/:id', passport.authenticate('jwt', {session:false}), function
     description: req.body.description,
     name: req.body.name,
     email: req.body.email,
-    phoneNumber: req.body.phoneNumber
   }
   User.updateUser(usr, (err, success) => {
     if (err) {
