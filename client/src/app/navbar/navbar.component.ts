@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-
+import * as alertify from 'alertify.js';
 
 @Component({
   selector: 'app-navbar',
@@ -47,7 +47,7 @@ export class NavbarComponent implements OnInit {
         this.router.navigate(['/']);
       } else {
         // todo: add failed message
-        console.log('login failed');
+        alertify.error("Login failed - Try again")
         this.router.navigate(['/login']);
       }
 
@@ -61,7 +61,6 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.router.navigate['#'];
     this.authService.logout();
   }
 }
