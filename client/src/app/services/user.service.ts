@@ -22,7 +22,7 @@ export class UserService {
   }
 
   getProfile(){    
-    return this.http.get(this.prepEndpoint('users/profile'), {headers: this.authService.getAuthHeaders()})
+    return this.http.get(this.prepEndpoint("profile"), {headers: this.authService.getAuthHeaders()})
       .map(res => res.json());
   }
 

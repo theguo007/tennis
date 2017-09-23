@@ -1,0 +1,61 @@
+<div class="container">
+  <form class="form-horizontal" [formGroup]="profileForm" (submit)=save() novalidate>
+    <fieldset>
+      <div id="legend">
+        <legend class="">Profile</legend>
+      </div>
+      <div class="form-group">
+        <!-- Username -->
+        <label class="col-md-4 control-label" for="name">Name</label>
+        <div class="col-md-4">
+          <input type="text" name="name" placeholder="" class="form-control input-md" formControlName="name">
+          <div *ngIf="formErrors.name && profileForm.get('name').touched" class="alert alert-danger">{{formErrors.name}}</div>
+        </div>
+      </div>
+   
+      <div class="form-group">
+        <!-- Birthdate -->
+        <label class="control-label col-md-4" for="birthdate">Date of Birth</label>
+        <div class="col-md-4">
+          <input type="date" class="form-control input-md" formControlName="birthdate">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <!-- Sex -->
+        <label class="control-label col-md-4" for="sex">Sex</label>
+        <div class="col-md-4">
+          <select class="form-control" formControlName="sex">
+              <option *ngFor="let sexy of sexes" [value]="sexy">{{sexy}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+          <!-- NTRP -->
+          <label class="control-label col-md-4" for="sex">NTRP Ranking</label>
+          <div class="col-md-4">
+            <select class="form-control" formControlName="ntrp">
+                <option *ngFor="let rank of ntrp" [value]="rank">{{rank}}</option>
+            </select>
+          </div>
+        </div>
+
+      <div class="form-group">
+        <!-- Description -->
+        <label class="col-md-4 control-label" for="name">Description</label>
+        <div class="col-md-4">
+          <textarea rows="4" name="description" class="form-control input-md" formControlName="description"></textarea>
+        </div>
+      </div>
+      
+
+      <div class="form-group">
+        <!-- Button -->
+        <div class="col-md-8 control-label">
+          <button type="submit" [disabled]="profileForm.status==='INVALID'" class="btn btn-success">Save</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>

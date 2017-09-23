@@ -13,7 +13,10 @@ var userSchema = new Schema({
     type: String,
     required: true,
   },
-	description: String, 						// short description of skill level
+  description: String,
+  birthdate: Date,
+  sex: String,
+  ntrp: String,
   password: {
     type: String,
     required: true,

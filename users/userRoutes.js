@@ -30,8 +30,7 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), function(r
   // res.json(req.headers.authorization.substring(4));
   var decoded = jwt.decode(req.headers.authorization.substring(4))._doc;
   delete decoded.password;
-  var x = new User(decoded);  
-  console.log(x);
+  var x = new User(decoded);
   res.json(x);
 });
 

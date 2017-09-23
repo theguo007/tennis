@@ -3,7 +3,9 @@ import { Observable } from "rxjs/Observable";
 export class User {
     id: number;
     email: string;
-    phoneNumber: number;
+    birthdate: Date;
+    sex: string;
+    ntrp: string;
     description: string;
     name: string;
 }

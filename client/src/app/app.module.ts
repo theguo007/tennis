@@ -13,7 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
 import { CreateUserComponent } from './create-user/create-user.component';
-import { EditUserComponent } from './edit-user/edit-user.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
@@ -26,7 +26,7 @@ import { HomeComponent } from './home/home.component';
     AppComponent,
     UserComponent,
     CreateUserComponent,
-    EditUserComponent,
+    EditProfileComponent,
     UserDetailComponent,
     NavbarComponent,
     LoginComponent,

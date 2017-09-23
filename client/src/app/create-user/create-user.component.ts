@@ -19,7 +19,7 @@ export class CreateUserComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService)
     {
-      this.createForm();      
+      this.createForm();
     }
 
   ngOnInit() {
