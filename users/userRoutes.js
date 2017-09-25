@@ -20,18 +20,19 @@ router.get('/users', passport.authenticate('jwt', {session:false}), function(req
 router.get('/users/:id', passport.authenticate('jwt', {session:false}), function(req, res){
   User.getUserById(req.params.id, function(err, user) {    
     if(err) res.send(err);
-
-    user.select("-password");
+    user.password = null;
     res.json(user);
   });
 });
 
 router.get('/profile', passport.authenticate('jwt', {session:false}), function(req, res, next){
   // res.json(req.headers.authorization.substring(4));
-  var decoded = jwt.decode(req.headers.authorization.substring(4))._doc;
-  delete decoded.password;
-  var x = new User(decoded);
-  res.json(x);
+  var decoded = jwt.decode(req.headers.authorization.substring(4)).userId;
+  User.getUserById(decoded, function(err, user) {
+    if(err) res.send(err);
+    user.password = null;
+    res.json(user);
+  });
 });
 
 // Create user
@@ -67,7 +68,7 @@ router.put('/users/:id', passport.authenticate('jwt', {session:false}), function
     birthdate: req.body.birthdate,
     ntrp: req.body.ntrp
   }
-  console.log(usr);
+  
   User.updateUser(usr, (err, success) => {
     if (err) {
       res.json({success: false, msg: "There was a problem updating your information."});
@@ -82,7 +83,6 @@ router.put('/users/:id', passport.authenticate('jwt', {session:false}), function
 router.post('/authenticate', (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-
   User.getUserByEmailWithPassword(email, (err, user) => {
     if(err) throw err;
     if(!user){
@@ -91,7 +91,7 @@ router.post('/authenticate', (req, res, next) => {
     User.comparePassword(password, user.password, (err, isMatch) => {
       if(err) throw err;
       if(isMatch){
-        const token = jwt.sign(user, config.secret, {
+        const token = jwt.sign({userId: user._id}, config.secret, {
           expiresIn: 604800 // 1 week
         });
 
