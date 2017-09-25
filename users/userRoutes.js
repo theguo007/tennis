@@ -63,8 +63,11 @@ router.put('/users/:id', passport.authenticate('jwt', {session:false}), function
     _id: req.params.id,
     description: req.body.description,
     name: req.body.name,
-    email: req.body.email,
+    sex: req.body.sex,
+    birthdate: req.body.birthdate,
+    ntrp: req.body.ntrp
   }
+  console.log(usr);
   User.updateUser(usr, (err, success) => {
     if (err) {
       res.json({success: false, msg: "There was a problem updating your information."});

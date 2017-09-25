@@ -66,9 +66,11 @@ module.exports.updateUser = function(usr, callback) {
       if (err) {
         callback(err, null);
       } else {
-        user.description = req.body.description,
-        user.name = req.body.name,
-        user.email = req.body.email,
+        user.description = usr.description,
+        user.name = usr.name,
+        user.birthdate = usr.birthdate,
+        user.sex = usr.sex,
+        user.ntrp = usr.ntrp;
         user.save(function(err){
           if(err) {
             callback(err, false);

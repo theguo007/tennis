@@ -27,7 +27,7 @@ export class UserService {
   }
 
   editUser(id: number, data: object): Observable<any>{
-      return this.http.put(this.prepEndpoint('users/' + id.toString() + '/edit'), JSON.stringify(data), {headers:this.authService.getAuthHeaders()})
+      return this.http.put(this.prepEndpoint('users/' + id.toString()), JSON.stringify(data), {headers:this.authService.getAuthHeaders()})
         .map(res => res.json())
         .catch(this.handleError);
   }

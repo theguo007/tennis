@@ -84,6 +84,19 @@ export class EditProfileComponent implements OnInit {
   }
 
   save(){
+    this.user.birthdate = this.profileForm.get('birthdate').value;
+    this.user.name = this.profileForm.get('name').value;
+    this.user.sex = this.profileForm.get('sex').value;
+    this.user.description = this.profileForm.get('description').value;
+    this.user.ntrp = this.profileForm.get('ntrp').value;
+
+    this.userService.editUser(this.user._id, this.user).subscribe(data => {
+      if(data.success == false){
+        alertify.error(data.message);
+      } else {
+        alertify.success("Profile successfully edited!")
+      }
+    });
 
   }
 }
