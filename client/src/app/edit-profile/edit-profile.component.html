@@ -17,7 +17,7 @@
         <!-- Birthdate -->
         <label class="control-label col-md-4" for="birthdate">Date of Birth</label>
         <div class="col-md-4">
-          <input type="date" class="form-control input-md" formControlName="birthdate">
+          <input type="date" [ngModel]="birthdate | date:'yyyy-MM-dd'" (ngModelChange)="birthdate = $event" class="form-control input-md" formControlName="birthdate">
         </div>
       </div>
 

@@ -70,10 +70,11 @@ export class EditProfileComponent implements OnInit {
     this.userService.getProfile().subscribe(data=> {
       this.user = data
       this.setForm();
-    });
+    });    
   }
 
   setForm(){
+    var formattedBirthday;
     this.profileForm.setValue({
       name: this.user.name || '',
       sex: this.user.sex || "Prefer not to disclose",
